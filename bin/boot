@@ -6,7 +6,7 @@ set -eo pipefail
 # Set LOGSTASH_TRACE to enable debugging
 [[ $LOGSTASH_TRACE ]] && set -x
 
-LOGSTASH_CONFIG_FILE="/opt/logstash.conf"
+LOGSTASH_CONFIG_FILE="/data/logstash.conf"
 
 # Download default conf if none present
 if [ ! -f $LOGSTASH_CONFIG_FILE ]; then
