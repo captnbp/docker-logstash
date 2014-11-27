@@ -10,18 +10,9 @@ LOGSTASH_CONFIG_FILE="/data/logstash.conf"
 
 # Download default conf if none present
 if [ ! -f $LOGSTASH_CONFIG_FILE ]; then
-    # Use the LOGSTASH_CONFIG_URL env var to download and use your
-    # logstash.conf file.
-    LOGSTASH_CONFIG_URL=${LOGSTASH_CONFIG_URL:-}
 
-    # If you don't provide a value for the LOGSTASH_CONFIG_URL env
-    # var, your install will default to our very basic logstash.conf file.
-    if [ -z "$LOGSTASH_CONFIG_URL" ]; then
-        LOGSTASH_CONFIG_URL="https://gist.github.com/pblittle/8778567/raw/logstash.conf"
-    fi
-
-    echo "Downloading default configuration file ..."
-    wget $LOGSTASH_CONFIG_URL -O $LOGSTASH_CONFIG_FILE
+    echo "Setting up default configuration file ..."
+    cp /app/logstash.conf.dist $LOGSTASH_CONFIG_FILE
 
     # This magic will replace ES_HOST and ES_PORT in your logstash.conf
     # file if they exist with the IP and port dynamically generated

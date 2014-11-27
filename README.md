@@ -7,7 +7,7 @@ This is a highly configurable logstash (1.4.2) image.
 If you want to link to container running Elasticsearch rather than use the embedded Elasticsearch server:
 
     $ docker run -d \
-      -e LOGSTASH_CONFIG_URL=<your_logstash_config_url> \
+      -v *yourlogstashconffolder*:/data \
       --link <your_es_container_name>:es \
       -p 9292:9292 \
       captnbp/docker-logstash
@@ -28,7 +28,7 @@ I have created an example [logstash_linked.conf](https://gist.githubusercontent.
 If you are using an external Elasticsearch server rather than the embedded server or a linked container, simply provide a configuration file with the Elasticsearch endpoints already configured:
 
     $ docker run -d \
-      -e LOGSTASH_CONFIG_URL=<your_logstash_config_url> \
+      -v *yourlogstashconffolder*:/data \
       -p 9292:9292 \
       captnbp/docker-logstash
 
@@ -44,17 +44,6 @@ If you prefer to build from source rather than use the [pblittle/docker-logstash
 
     $ git clone https://github.com/captnbp/docker-logstash.git
     $ cd docker-logstash
-
-If you are using Vagrant, start and provision a virtual machine using the provided Vagrantfile:
-
-    $ vagrant up
-    $ vagrant ssh
-    $ cd /vagrant
-
-From there, build and run a container using the newly created virtual machine:
-
-    $ make build
-    $ make <options> run
 
 You can now verify the logstash installation by visiting the [prebuilt logstash dashboard][3] running in the newly created container.
 
