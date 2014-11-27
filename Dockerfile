@@ -19,5 +19,8 @@ ADD . /app
 # Kibana
 EXPOSE 9292
 
+# Volume for Logstash's conf file
+VOLUME /data
+
 # Start logstash
 ENTRYPOINT ["/app/bin/boot"]
