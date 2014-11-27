@@ -1,5 +1,6 @@
 FROM java:7-jre
-MAINTAINER P. Barrett Little <barrett@barrettlittle.com>
+MAINTAINER Benoît Pourre <benoit.pourre@gmail.com>
+# Thanks to P. Barrett Little <barrett@barrettlittle.com>
 
 # Download version 1.4.2 of logstash
 RUN cd /tmp && \
@@ -14,12 +15,6 @@ RUN /opt/logstash/bin/plugin install contrib
 # Copy build files to container root
 RUN mkdir /app
 ADD . /app
-
-# Elasticsearch HTTP
-EXPOSE 9200
-
-# Elasticsearch transport
-EXPOSE 9300
 
 # Kibana
 EXPOSE 9292
