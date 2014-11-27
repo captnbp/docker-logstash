@@ -1,33 +1,6 @@
 # Logstash Dockerfile
 
-This is a highly configurable logstash (1.4.2) image running Elasticsearch (1.1.1) and Kibana 3 (3.0.1).
-
-## How to use this image
-
-To run the image, you have to first decide on one of three Elasticsearch configurations:
-
- * Use the embedded Elasticsearch server
- * Use a linked container running Elasticsearch
- * Use an external Elasticsearch server
-
-### Embedded Elasticsearch server
-
-To fetch and start a container using an example [logstash.conf][2] and the embedded Elasticsearch server, simply execute:
-
-    $ docker run -d \
-      -p 9292:9292 \
-      -p 9200:9200 \
-      pblittle/docker-logstash
-
-By default, an example [logstash.conf][2] will be downloaded using `wget`, moved to `/opt/logstash.conf`, and used in your container.
-
-To use your own config file, set the `LOGSTASH_CONFIG_URL` environment variable using the `-e` flag as follows:
-
-    $ docker run -d \
-      -e LOGSTASH_CONFIG_URL=<your_logstash_config_url> \
-      -p 9292:9292 \
-      -p 9200:9200 \
-      pblittle/docker-logstash
+This is a highly configurable logstash (1.4.2) image.
 
 ### Linked container running Elasticsearch
 
@@ -37,8 +10,7 @@ If you want to link to container running Elasticsearch rather than use the embed
       -e LOGSTASH_CONFIG_URL=<your_logstash_config_url> \
       --link <your_es_container_name>:es \
       -p 9292:9292 \
-      -p 9200:9200 \
-      pblittle/docker-logstash
+      captnbp/docker-logstash
 
 To have the linked Elasticsearch container's `bind_host` and `port` automatically detected, you will need to create an `ES_HOST` and `ES_PORT` placeholder in the `elasticsearch` definition in your logstash config file. For example:
 
@@ -58,8 +30,7 @@ If you are using an external Elasticsearch server rather than the embedded serve
     $ docker run -d \
       -e LOGSTASH_CONFIG_URL=<your_logstash_config_url> \
       -p 9292:9292 \
-      -p 9200:9200 \
-      pblittle/docker-logstash
+      captnbp/docker-logstash
 
 ### Finally, verify the installation
 
@@ -71,7 +42,7 @@ You can now verify the logstash installation by visiting the prebuilt logstash d
 
 If you prefer to build from source rather than use the [pblittle/docker-logstash][1] trusted build published to the public Docker Registry, execute the following:
 
-    $ git clone https://github.com/pblittle/docker-logstash.git
+    $ git clone https://github.com/captnbp/docker-logstash.git
     $ cd docker-logstash
 
 If you are using Vagrant, start and provision a virtual machine using the provided Vagrantfile:
@@ -86,10 +57,6 @@ From there, build and run a container using the newly created virtual machine:
     $ make <options> run
 
 You can now verify the logstash installation by visiting the [prebuilt logstash dashboard][3] running in the newly created container.
-
-## Acknowledgements
-
-Special shoutout to @ehazlett's excellent post, [Logstash and Kibana3 via Docker][4].
 
 ## Contributing
 
