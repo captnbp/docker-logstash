@@ -7,7 +7,8 @@ This is a highly configurable logstash (1.4.2) image.
 If you want to link to container running Elasticsearch rather than use the embedded Elasticsearch server:
 
     $ docker run -d \
-      -v *yourlogstashconffolder*:/data \
+      -v *yourLogstashConfFolder*:/data \
+      -v *yourLogsFolder*:/logs \
       --link <your_es_container_name>:es \
       -p 9292:9292 \
       captnbp/docker-logstash
@@ -28,7 +29,8 @@ I have created an example [logstash_linked.conf](https://gist.githubusercontent.
 If you are using an external Elasticsearch server rather than the embedded server or a linked container, simply provide a configuration file with the Elasticsearch endpoints already configured:
 
     $ docker run -d \
-      -v *yourlogstashconffolder*:/data \
+      -v *yourLogstashConfFolder*:/data \
+      -v *yourLogsFolder*:/logs \
       -p 9292:9292 \
       captnbp/docker-logstash
 

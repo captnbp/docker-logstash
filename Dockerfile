@@ -21,6 +21,7 @@ EXPOSE 9292
 
 # Volume for Logstash's conf file
 VOLUME /data
+VOLUME /logs
 
 # Start logstash
 ENTRYPOINT ["/app/bin/boot"]

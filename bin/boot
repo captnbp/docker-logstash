@@ -6,25 +6,26 @@ set -eo pipefail
 # Set LOGSTASH_TRACE to enable debugging
 [[ $LOGSTASH_TRACE ]] && set -x
 
-LOGSTASH_CONFIG_FILE="/data/logstash.conf"
+LOGSTASH_CONFIG_DIR="/data/"
+LOGSTASH_CONFIG_FILE="${LOGSTASH_CONFIG_DIR}logstash.conf"
 
 # Download default conf if none present
 if [ ! -f $LOGSTASH_CONFIG_FILE ]; then
 
     echo "Setting up default configuration file ..."
     cp /app/logstash.conf.dist $LOGSTASH_CONFIG_FILE
-
-    # This magic will replace ES_HOST and ES_PORT in your logstash.conf
-    # file if they exist with the IP and port dynamically generated
-    # by docker. Take a look at the readme for more details.
-    #
-    # Note: Don't use this on a file mounting using a docker
-    # volume, as the inode switch will cause `device or resource busy`
-    # Instead download your file as normal
-    sed -e "s/ES_HOST/${ES_PORT_9200_TCP_ADDR}/g" \
-        -e "s/ES_PORT/${ES_PORT_9200_TCP_PORT}/g" \
-        -i $LOGSTASH_CONFIG_FILE
+    cp -a /app/patterns ${LOGSTASH_CONFIG_DIR}
 fi
+
+# This magic will replace ES_HOST and ES_PORT in your logstash.conf
+# file if they exist with the IP and port dynamically generated
+# by docker. Take a look at the readme for more details.
+#
+# Note: Don't use this on a file mounting using a docker
+# volume, as the inode switch will cause `device or resource busy`
+# Instead download your file as normal
+sed -e "s/host => \".*\"/host => \"${ES_PORT_9200_TCP_ADDR}\"/g" -i $LOGSTASH_CONFIG_FILE
+
 
 # Default path for SSL certificates
 SSL_CERT_PATH="/opt/ssl"
